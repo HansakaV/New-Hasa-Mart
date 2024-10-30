@@ -48,7 +48,7 @@
                 </li>
                 <li class="nav-item">
           <span id="login-nav" class="nav-link">
-            <i class="fa fa-sign-in"></i>Login
+            <i class="fa fa-sign-in"></i>Log Out
           </span>
                 </li>
 
@@ -128,15 +128,15 @@
                     </h5>
                     <div class="mt-3">
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Item 1</span>
-                            <span class="badge bg-success">150 sold</span>
+                            <span>Sugar</span>
+                            <span class="badge bg-success">550 kg sold</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Item 2</span>
-                            <span class="badge bg-success">120 sold</span>
+                            <span>Rice</span>
+                            <span class="badge bg-success">420 Kg sold</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Item 3</span>
+                            <span>Soap </span>
                             <span class="badge bg-success">90 sold</span>
                         </div>
                     </div>
@@ -152,15 +152,15 @@
                     </h5>
                     <div class="mt-3">
                         <div class="d-flex justify-content-between mb-2">
-                            <span>John Doe</span>
+                            <span>Mahesh</span>
                             <span class="text-muted">5 mins ago</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Jane Smith</span>
+                            <span>Minindu</span>
                             <span class="text-muted">15 mins ago</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Mike Johnson</span>
+                            <span>Chathunka</span>
                             <span class="text-muted">1 hour ago</span>
                         </div>
                     </div>
@@ -241,22 +241,22 @@
             <form id="itemForm">
                 <div class="row mb-3">
                     <div class="col">
-                        <label for="firstName" class="form-label">Item Id</label>
+                        <label for="itemID" class="form-label">Item Id</label>
                         <input type="text" class="form-control" id="itemID" placeholder="Item Id" required>
                     </div>
                     <div class="col">
-                        <label for="lastName" class="form-label">Description</label>
+                        <label for="description" class="form-label">Description</label>
                         <input type="text" class="form-control" id="description" placeholder="Description" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <label for="mobile" class="form-label">Quantity</label>
-                        <input type="text" class="form-control" id="quantity" placeholder="Quantity" required>
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" placeholder="Quantity" required>
                     </div>
                     <div class="col">
-                        <label for="email" class="form-label">Unit Price</label>
-                        <input type="email" class="form-control" id="unitPrice" placeholder="Unit Price" required>
+                        <label for="unitPrice" class="form-label">Unit Price</label>
+                        <input type="number" class="form-control" id="unitPrice" placeholder="Unit Price" required>
                     </div>
                 </div>
 
@@ -330,7 +330,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="quantity" class="form-label">Quantity</label>
-                                    <input type="number" class="form-control" id="quantity" min="1" value="1">
+                                    <input type="number" class="form-control" id="quantitySelect" min="1" value="1">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">&nbsp;</label>
@@ -657,10 +657,10 @@
 
 
 
-
 <script src="./assets/lib/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="controller/customerController.js"></script>
+<script type="module" src="controller/itemController.js"></script>
+
 <script>
     let dashboard_nav = document.getElementById("dashboard-nav");
     let customer_nav = document.getElementById("customer-nav");
@@ -702,24 +702,27 @@
         customer_section.style.display = "block";
     });
 
-    // Other navigation items (add these handlers once you create their sections)
+    // Item navigation
     item_nav.addEventListener('click', function () {
         hideAllSections()
         item_section.style.display = "block";
     });
 
+    // Order navigation
     order_nav.addEventListener('click', function () {
         hideAllSections()
         order_section.style.display = "block";
         // Add order section display logic when you create the section
     });
 
+    // Order history navigation
     order_history_nav.addEventListener('click', function () {
         hideAllSections()
         order_history_section.style.display = "block";
-        // Add order history section display logic when you create the section
 
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
