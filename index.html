@@ -306,9 +306,7 @@
                     <div class="mb-3">
                         <label for="customerSelect" class="form-label">Select Customer</label>
                         <select class="form-select" id="customerSelect" required>
-                            <option value="">Choose customer...</option>
-                            <option value="1">John Doe</option>
-                            <option value="2">Jane Smith</option>
+                            <option value="">Select customer...</option>
                         </select>
                     </div>
 
@@ -323,9 +321,7 @@
                                     <label for="itemSelect" class="form-label">Item</label>
                                     <select class="form-select" id="itemSelect">
                                         <option value="">Select item...</option>
-                                        <option value="1" data-price="10.00">Item 1 - $10.00</option>
-                                        <option value="2" data-price="15.00">Item 2 - $15.00</option>
-                                        <option value="3" data-price="20.00">Item 3 - $20.00</option>
+
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -351,13 +347,13 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody id="orderItemsList">
                             <!-- Items will be added here dynamically -->
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -374,10 +370,7 @@
                         <span>Subtotal:</span>
                         <span id="subtotal">$0.00</span>
                     </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Tax (10%):</span>
-                        <span id="tax">$0.00</span>
-                    </div>
+
                     <div class="d-flex justify-content-between mb-2">
                         <span>Discount:</span>
                         <div class="input-group input-group-sm w-50">
@@ -660,6 +653,7 @@
 <script src="./assets/lib/jquery-3.7.1.min.js"></script>
 <script type="module" src="controller/customerController.js"></script>
 <script type="module" src="controller/itemController.js"></script>
+<script type="module" src="controller/orderController.js"></script>
 
 <script>
     let dashboard_nav = document.getElementById("dashboard-nav");
