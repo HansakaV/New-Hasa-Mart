@@ -4,7 +4,6 @@
         this._first_name = first_name;
         this._last_name = last_name;
         this._address = address;
-        this._tel = mobile;
         this._email = email;
         this._mobile = mobile;
 
