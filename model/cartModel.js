@@ -1,9 +1,18 @@
 export default class CartModel{
-    constructor(cartItem,price,quantity,total) {
+    constructor(id,cartItem,price,quantity,total) {
         this._cartItem = cartItem;
         this._price = price;
         this._quantity = quantity;
         this._total = total;
+        this._id = id;
+    }
+
+    get id() {
+        return this._id;
+    }
+
+    set id(value) {
+        this._id = value;
     }
 
     get cartItem() {
