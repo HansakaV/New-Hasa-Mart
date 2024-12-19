@@ -2,14 +2,11 @@ import {customer_array, item_array, order_array,cart_array,sub_total} from "../d
 import cartModel from "../model/cartModel.js";
 import orderModel from "../model/orderModel.js";
 
-import {validateEmail, validateMobile} from "../util/validation";
-import customerModel from "../model/customerModel";
-
 let total = 0;
-const selectedId = $(this).val(); // Get the selected value (id)
-const selectedText = $("#itemSelect option:selected").text(); // Get the selected text (description)
-console.log("Selected ID: ", selectedId);
-console.log("Selected Text: ", selectedText);
+const currentDate = new Date();
+console.log(currentDate);
+
+
 
 const loadCart = () => {
     $('#orderItemsList').empty()
@@ -65,14 +62,12 @@ $("#confirm-discount").on("click " ,function (){
     subTotal();
     console.log("Discount Confirmed");
 })
-
 let item_name = null
-let qty = null
-let customerSelected = null
+let customer_name = null
 $("#addItemBtn").on("click " ,function (){
-     item_name = $('#itemSelect option:selected').text();
-     customerSelected = $('#customerSelect option:selected').text();
-     qty = $('#quantitySelect').val();
+     item_name = $('#itemSelect option:selected').val();
+     customer_name = $('#customerSelect option:selected').val();
+    let qty = $('#quantitySelect').val();
     let unit_price = getItemPrice();
     let total = qty * unit_price;
     console.log("price",unit_price,"total",total);
@@ -93,6 +88,9 @@ $("#addItemBtn").on("click " ,function (){
 
 
 })
+export function placeOrder() {
+
+}
 export function loadCustomers() {
     console.log("Customer Controller Loaded");
 
@@ -102,9 +100,9 @@ export function loadCustomers() {
         console.log("Customers available.");
         customer_array.map((item) => {
             // Create a new option element
-            let option = `<option >${item.first_name}</option>`; // Assuming item has an 'id' property
-            console.log(option); // Log the option for debugging
-            $("#customerSelect").append(option); // Append option to the select element
+            let customer = `<option >${item.first_name}</option>`; // Assuming item has an 'id' property
+            console.log(customer); // Log the option for debugging
+            $("#customerSelect").append(customer); // Append option to the select element
         });
 
 }
@@ -112,12 +110,15 @@ export function loadCustomers() {
 export function loadItems() {
     console.log("Item Controller Loaded");
 
+    // Clear existing options in the select element
     $("#itemSelect").empty();
+
+    console.log("Items available.");
     item_array.map((item) => {
         // Create a new option element
-        let option = `<option >${item.description}</option>`; // Assuming item has an 'id' property
-        console.log(option); // Log the option for debugging
-        $("#itemSelect").append(option); // Append option to the select element
+        let item1 = `<option >${item.description}</option>`; // Assuming item has an 'id' property
+        console.log(item1); // Log the option for debugging
+        $("#itemSelect").append(item1); // Append option to the select element
     });
 
 }
@@ -129,65 +130,77 @@ $("#itemSelect").on('click' ,function () {
     loadItems();
 });
 
-const formattedDate = currentDate.toLocaleDateString();
-console.log(formattedDate);
+const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-
-document.getElementById('placeOrderBtn').addEventListener('click', function () {
-    const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+$("#placeOrderBtn").on("click " ,function (){
+    let order_id = order_array.length + 1;
+    let payment_method = selectedPaymentMethod
+    let discount = $('#discountInput').val();
     let qty = $('#quantitySelect').val();
     let total = $('#totalAmount').text();
-    let discount = $('#discountInput').val();
-    console.log(customerSelected,item_name,qty,total,discount,selectedPaymentMethod);
+    console.log("Order Placed",order_id,customer_name,item_name,qty,payment_method,discount,total);
 
-    if (qty===0){
+    if (total === 0) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Invalid Qty!",
+            text: "Add Items To cart!",
         });
-
-    }else if (customerSelected== null){
+    }else if (customer_name === null) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Select customer!",
+            text: "Select Customer!",
         });
-    }else if (item_name== null){
+    }else if (item_name === null) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "Select Item!",
         });
-    }
-    else if (selectedPaymentMethod== null){
+    }else if ((qty === 0) || (qty === null)) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Please Select Payment Method!",
+            text: "Invalid Qty!",
         });
-    }else {
-        let id = customer_array.length+1;
-        let newOrder = new orderModel(id,formattedDate,customerSelected,item_name,qty,selectedPaymentMethod,discount,total);
-
-        order_array.push(newOrder);
+    }else{
+        let order = new orderModel(order_id,customer_name,item_name,qty,payment_method,discount,total);
+        order_array.push(order);
         Swal.fire({
             icon: "success",
             title: "Success",
             text: "Order Placed Successfully!",
         });
-
-
-        $('#itemSelect').val('')
-        $('#customerSelect').val('')
-        $('#quantitySelect').val('')
-        $('#discountInput').val('')
-        $('#address').val('')
-
-
+        loadOrderTable()
     }
+
+
+
+
+    $('#customerSelect').val("");
+    $('#itemSelect').val("");
+    $('#discountInput').val("");
+    $('#totalAmount').text("");
 
 
 });
 
+const loadOrderTable = () => {
+    console.log("Loading History Table");
+    $('#orderHistory').empty();
 
+    order_array.forEach((item) => {
+        console.log("Order Item:", item);
+        let data = `<tr>
+            <td>${item.id}</td>
+            <td>${item.customer}</td>
+            <td>${item.item}</td> <!-- Removed item() -->
+            <td>${item.qty}</td> <!-- Removed qty() -->
+            <td>${item.paymentMethod}</td>
+            <td>${item.discount}</td>
+            <td>${item.total}</td>
+        </tr>`;
+        $('#orderHistory').append(data);
+    });
+};

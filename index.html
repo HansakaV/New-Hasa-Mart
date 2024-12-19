@@ -393,13 +393,13 @@
                         <label class="form-label">Payment Method</label>
                         <div class="d-flex gap-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashPayment" checked>
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashPayment" value="cash" checked>
                                 <label class="form-check-label" for="cashPayment">
                                     Cash
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="card">
                                 <label class="form-check-label" for="cardPayment">
                                     Card
                                 </label>
@@ -487,12 +487,10 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Orders List</h5>
                 <div>
-                    <button class="btn btn-outline-primary me-2">
-                        <i class="fas fa-file-excel me-2"></i>Export Excel
+                    <button class="btn btn-outline-primary me-2 " id="refresh">
+                        <i class="fas fa-file-excel me-2"></i>Refresh
                     </button>
-                    <button class="btn btn-outline-secondary">
-                        <i class="fas fa-print me-2"></i>Print
-                    </button>
+
                 </div>
             </div>
         </div>
@@ -502,56 +500,21 @@
                     <thead class="table-light">
                     <tr>
                         <th>Order ID</th>
-                        <th>Date</th>
                         <th>Customer</th>
                         <th>Items</th>
-                        <th>Total</th>
+                        <th>Qty</th>
                         <th>Payment</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Discount %</th>
+                        <th>Total</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <!-- Sample Order Rows -->
-                    <tr>
-                        <td>#ORD001</td>
-                        <td>2024-10-30 14:30</td>
-                        <td>John Doe</td>
-                        <td>3 items</td>
-                        <td>$150.00</td>
-                        <td><span class="badge bg-success">Cash</span></td>
-                        <td><span class="badge bg-primary">Completed</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#orderDetailModal">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-secondary" onclick="printOrder('ORD001')">
-                                <i class="fas fa-print"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#ORD002</td>
-                        <td>2024-10-30 15:45</td>
-                        <td>Jane Smith</td>
-                        <td>2 items</td>
-                        <td>$85.00</td>
-                        <td><span class="badge bg-info">Card</span></td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#orderDetailModal">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-secondary" onclick="printOrder('ORD002')">
-                                <i class="fas fa-print"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <tbody id="orderHistory">
+                    <!-- Items will be added here dynamically -->
                     </tbody>
                 </table>
             </div>
 
-            <!-- Pagination -->
+          <!--  &lt;!&ndash; Pagination &ndash;&gt;
             <nav aria-label="Orders pagination" class="mt-4">
                 <ul class="pagination justify-content-center">
                     <li class="page-item disabled">
@@ -564,7 +527,7 @@
                         <a class="page-link" href="#">Next</a>
                     </li>
                 </ul>
-            </nav>
+            </nav>-->
         </div>
     </div>
 </div>
@@ -657,7 +620,7 @@
 <script src="./assets/lib/jquery-3.7.1.min.js"></script>
 <script type="module" src="controller/customerController.js"></script>
 <script type="module" src="controller/itemController.js"></script>
-<script type="module" src="controller/orderController.js"></script>
+<script type="module" src="controller/orderControllerold.js"></script>
 
 <script>
     let dashboard_nav = document.getElementById("dashboard-nav");
